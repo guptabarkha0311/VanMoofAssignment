@@ -23,6 +23,10 @@ public class PropertyFileReader implements ConfigReader {
 	public String getWebsite() {
 		return prop.getProperty("Website");
 	}
+	
+	public String getAPIWebsite() {
+		return prop.getProperty("APIWebsite");
+	}
 
 	public int getPageLoadTimeOut() {
 		return Integer.parseInt(prop.getProperty("PageLoadTimeOut"));

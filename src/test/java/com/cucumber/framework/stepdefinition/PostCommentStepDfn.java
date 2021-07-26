@@ -9,6 +9,7 @@ import java.util.Set;
 import org.testng.Assert;
 
 import com.cucumber.framework.helper.PageObject.homepage.HomePage;
+import com.cucumber.framework.settings.ObjectRepo;
 import com.cucumber.framework.utility.ResourceHelper;
 
 import cucumber.api.Scenario;
@@ -32,34 +33,34 @@ public class PostCommentStepDfn {
 
 	@Given("^: I am at the API home page$")
 	public void _i_am_at_the_API_home_page() throws Throwable {
-		Response response = RestAssured.get("https://jsonplaceholder.typicode.com");
+		Response response = RestAssured.get(ObjectRepo.reader.getAPIWebsite());
 		int code = response.getStatusCode();
 		Assert.assertEquals(code, 200);
 	}
-    
+
 	@Then("^: I get all the Posts$")
 	public void _i_get_all_the_posts() throws Throwable {
 	}
-	
+
 	@And("^: I validate posts response code and valid json content$")
 	public void posts_validate() throws Throwable {
-		Response response = RestAssured.get("https://jsonplaceholder.typicode.com/posts");
+		Response response = RestAssured.get(ObjectRepo.reader.getAPIWebsite() + "/posts");
 		int code = response.getStatusCode();
 		Assert.assertEquals(code, 200);
 		scenario.write("Status code 200 matched");
 		Assert.assertEquals(response.asString().isEmpty(), false);
 		scenario.write("posts response is not empty");
-		
+
 		Post[] postList = response.then().extract().as(Post[].class);
 		Set<String> idSet = new HashSet<String>();
 		for (Post post : postList) {
 			idSet.add(post.getId());
 		}
-		
+
 		for (String temp : idSet) {
-			Response response1 = RestAssured.get("https://jsonplaceholder.typicode.com/comments?postId=" + temp);
+			Response response1 = RestAssured.get(ObjectRepo.reader.getAPIWebsite() + "/comments?postId=" + temp);
 			Assert.assertEquals(!(response1.asString().isEmpty()), true, "Comments response empty");
-			Comment [] commentList = response1.then().extract().as(Comment[].class);
+			Comment[] commentList = response1.then().extract().as(Comment[].class);
 			Assert.assertEquals(commentList.length > 0, true, "Comments response has 0 elements");
 		}
 		scenario.write("All posts have at least one comment present");
@@ -71,10 +72,9 @@ public class PostCommentStepDfn {
 		scenario.write("posts content is a valid JSON");
 	}
 
-	
 	@Then("^: I validate posts reference by the comments exist$")
 	public void _i_validate_post_reference_by_comment_exist() throws Throwable {
-		Response response = RestAssured.get("https://jsonplaceholder.typicode.com/comments");
+		Response response = RestAssured.get(ObjectRepo.reader.getAPIWebsite() + "/comments");
 		Comment[] commentList = response.then().extract().as(Comment[].class);
 
 		Set<String> postIdSet = new HashSet<String>();
@@ -82,9 +82,9 @@ public class PostCommentStepDfn {
 			postIdSet.add(comment.getPostId());
 		}
 		for (String postId : postIdSet) {
-			Response postsResponse = RestAssured.get("https://jsonplaceholder.typicode.com/posts/" + postId);
+			Response postsResponse = RestAssured.get(ObjectRepo.reader.getAPIWebsite() + "/posts/" + postId);
 			Assert.assertEquals(!(postsResponse.asString().isEmpty()), true, "Post does not exist");
-            
+
 		}
 		scenario.write("Posts referenced by the comment exist");
 	}

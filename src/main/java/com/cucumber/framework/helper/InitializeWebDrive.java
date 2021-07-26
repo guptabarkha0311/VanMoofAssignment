@@ -65,29 +65,6 @@ public class InitializeWebDrive {
 		oLog.info("");
 	}
 	
-	@Before(order=3,value={"@firefox"})
-	public void beforeFirefox() throws Exception {
-		setUpDriver(BrowserType.Firefox);
-		oLog.info(BrowserType.Firefox);
-	}
-
-	@After(order=3,value={"@firefox"})
-	public void afterFirefox(Scenario scenario) throws Exception {
-		tearDownDriver(scenario);
-		oLog.info("");
-	}
-
-	@Before(order=2,value={"@chrome"})
-	public void beforeChrome() throws Exception {
-		setUpDriver(BrowserType.Chrome);
-		oLog.info(BrowserType.Chrome);
-	}
-
-	@After(order=2,value={"@chrome"})
-	public void afterChrome(Scenario scenario) throws Exception {
-		tearDownDriver(scenario);
-		oLog.info("");
-	}
 
 	public void setUpDriver(BrowserType bType) throws Exception {
 		ObjectRepo.driver = standAloneStepUp(bType);
