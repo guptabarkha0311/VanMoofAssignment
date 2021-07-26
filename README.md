@@ -1,8 +1,8 @@
-# VanMoofAssignment
+# VanMoof Assignment
 
-## BDD framework for Automation Testing Using Selenium , TestNG, Java and Rest-Assured
+## BDD framework for Automation Testing Using Selenium, Java and Rest-Assured
 
-This is the test automation framework developed for web application Vanmoof and for testing API of the site https://jsonplaceholder.typicode.com. This automation framework is developed using Selenium, Cucumber, Java, Maven and Rest-Assured for web and API testing.
+This is the test automation framework developed for testing the web application for Vanmoof and for testing API of the site https://jsonplaceholder.typicode.com. This automation framework is developed using Selenium, Cucumber, Java, Maven and Rest-Assured for web and API testing.
 
 ## Framework Description
 
@@ -33,7 +33,7 @@ Prerequisite: You need to have following softwares installed on your computer**
 
 **Navigate to your project directory from terminal and run following commands**
 
-- `mvn clean generate-sources test` (defualt will run on local chrome browser)
+- `mvn clean generate-sources test` (default will run on local chrome browser)
 - `mvn test "-Dbrowser=chrome` (to use any other browser)
 
 ## Cucumber Report
